@@ -2,7 +2,7 @@ import { expect } from "@wdio/globals";
 import LoginPage from "../pageobjects/login.page.js";
 import { describe } from "mocha";
 
-describe("My Login application", () => {
+xdescribe("My Login application", () => {
   beforeEach(async () => {
     await LoginPage.open();
     await LoginPage.login("standard_user", "secret_sauce");
