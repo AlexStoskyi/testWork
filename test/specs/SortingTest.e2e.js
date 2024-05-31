@@ -1,15 +1,17 @@
-import { expect } from "@wdio/globals";
 import LoginPage from "../pageobjects/login.page.js";
+import ItemPage from "../pageobjects/item.page.js";
+import itemPage from "../pageobjects/item.page.js";
 
-xdescribe("Sorting", () => {
+xdescribe("Sorting items", () => {
   let prices;
   let sortedByName;
+
   beforeEach(async () => {
     await LoginPage.open();
     await LoginPage.login("standard_user", "secret_sauce");
 
-    const foo = await $$("#inventory_container")[0];
-    prices = await foo
+    const containerItems = await $$("#inventory_container")[0];
+    prices = await containerItems
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
 
@@ -21,149 +23,45 @@ xdescribe("Sorting", () => {
 
   it("Sort by low to hight", async () => {
     const sortedPrice = prices.sort((a, b) => a - b);
-    console.log(sortedPrice);
-
-    const dropdown = await $(".select_container");
-    await dropdown.click();
-    const option = await dropdown.$('option[value="lohi"]');
-    await option.click();
-
+    await ItemPage.dropdownBut();
+    await itemPage.clickLoHi();
     const foof = await $$("#inventory_container")[0];
-
     const afterPrice = await foof
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
-    console.log(afterPrice);
-
-    let areEqual = true;
-
-    if (prices.length !== afterPrice.length) {
-      areEqual = false;
-    } else {
-      for (let i = 0; i < prices.length; i++) {
-        if (prices[i] !== afterPrice[i]) {
-          areEqual = false;
-          break;
-        }
-      }
-    }
-
-    if (areEqual) {
-      console.log(
-        `Кожен елемент масиву A дорівнює відповідному елементу масиву B`
-      );
-    } else {
-      console.log(
-        `Не всі елементи масиву A дорівнюють відповідним елементам масиву B`
-      );
-    }
+    await expect(afterPrice).toEqual(sortedPrice);
   });
 
   it("Sort by hight to low", async () => {
     const sortedPrice = prices.sort((a, b) => b - a);
-    console.log(sortedPrice);
-
-    const dropdown = await $(".select_container");
-    await dropdown.click();
-    const option = await dropdown.$('option[value="hilo"]');
-    await option.click();
-
+    await ItemPage.dropdownBut();
+    await itemPage.clickHiLo();
     const foof = await $$("#inventory_container")[0];
-
     const afterPrice = await foof
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
-    console.log(afterPrice);
-
-    let areEqual = true;
-
-    for (let i = 0; i < prices.length; i++) {
-      if (prices[i] !== afterPrice[i]) {
-        areEqual = false;
-        break;
-      }
-    }
-
-    if (areEqual) {
-      console.log(
-        `Кожен елемент масиву A дорівнює відповідному елементу масиву B`
-      );
-    } else {
-      console.log(
-        `Не всі елементи масиву A дорівнюють відповідним елементам масиву B`
-      );
-    }
+    await expect(afterPrice).toEqual(sortedPrice);
   });
 
   it("Sort by Name(A to Z)", async () => {
     const sortedName = sortedByName.sort((a, b) => a - b);
-    console.log(sortedName);
-
-    const dropdown = await $(".select_container");
-    await dropdown.click();
-    const option = await dropdown.$('option[value="az"]');
-    await option.click();
-
+    await ItemPage.dropdownBut();
+    await itemPage.clickAz();
     const too = await $$("#inventory_container")[0];
-
     const afterChangeByName = await too
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
-    console.log(afterChangeByName);
-
-    let areEqual = true;
-
-    for (let i = 0; i < sortedName.length; i++) {
-      if (sortedName[i] !== afterChangeByName[i]) {
-        areEqual = false;
-        break;
-      }
-    }
-
-    if (areEqual) {
-      console.log(
-        `Кожен елемент масиву A дорівнює відповідному елементу масиву B`
-      );
-    } else {
-      console.log(
-        `Не всі елементи масиву A дорівнюють відповідним елементам масиву B`
-      );
-    }
+    await expect(afterChangeByName).toEqual(sortedName);
   });
 
   it("Sort by Name(Z to A)", async () => {
     const sortedName = sortedByName.reverse();
-    console.log(sortedName);
-
-    const dropdown = await $(".select_container");
-    await dropdown.click();
-    const option = await dropdown.$('option[value="za"]');
-    await option.click();
-
+    await ItemPage.dropdownBut();
+    await itemPage.clickZa();
     const too = await $$("#inventory_container")[0];
-
     const afterChangeByName = await too
       .$$(".inventory_item_name")
-      .map(async (name) => await name.getText());
-    console.log(afterChangeByName);
-
-    let areEqual = true;
-
-    for (let i = 0; i < sortedName.length; i++) {
-      if (sortedName[i] !== afterChangeByName[i]) {
-        areEqual = false;
-        break;
-      }
-    }
-
-    if (areEqual) {
-      console.log(
-        `Кожен елемент масиву A дорівнює відповідному елементу масиву B`
-      );
-    } else {
-      console.log(
-        `Не всі елементи масиву A дорівнюють відповідним елементам масиву B`
-      );
-    }
+      .map(async (name) => (await name.getText()).replace("$", ""));
+    await expect(afterChangeByName).toEqual(sortedName);
   });
 });
