@@ -1,6 +1,6 @@
 import { $ } from "@wdio/globals";
 
-class CartPage {
+class cartPage {
   get productList() {
     return $(".inventory_item");
   }
@@ -34,13 +34,13 @@ class CartPage {
   get finishButt() {
     return $("#finish");
   }
-    get backHome() {
-        return $("#back-to-products");
-    }
+  get backHome() {
+    return $("#back-to-products");
+  }
 
-    async clickBackHomeBut() {
-        (await this.backHome).click();
-}
+  async clickBackHomeBut() {
+    (await this.backHome).click();
+  }
   async clickFinish() {
     (await this.finishButt).click();
   }
@@ -67,4 +67,4 @@ class CartPage {
   }
 }
 
-export default new CartPage();
+export default new cartPage();

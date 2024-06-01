@@ -1,11 +1,11 @@
 import { expect } from "@wdio/globals";
-import LoginPage from "../pageobjects/login.page.js";
+import loginPage from "../pageobjects/login.page.js";
 import cartPage from "../pageobjects/cart.page.js";
 import itemPage from "../pageobjects/item.page.js";
 xdescribe("Sorting", () => {
   beforeEach(async () => {
-    await LoginPage.open();
-    await LoginPage.login("standard_user", "secret_sauce");
+    await loginPage.open();
+    await loginPage.login("standard_user", "secret_sauce");
   });
 
   it("Cart test", async () => {
@@ -18,28 +18,28 @@ xdescribe("Sorting", () => {
     //open cart check url
     console.log(cartPage.cart, cartPage.cartContents);
     await cartPage.clickCartBut();
-    await browser.pause(500);
+    browser.pause(500);
 
     const currentUrl = await browser.getUrl();
     await expect(currentUrl).toContain("https://www.saucedemo.com/cart.html");
     // add item fкom cart to array#1
     const too = await cartPage.cartContents[0];
-    const OpenCatr = await too
+    const openCatr = await too
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
-    console.log(OpenCatr);
+    console.log(openCatr);
     //Logout
     await itemPage.clickBurButt();
     await browser.pause(500);
 
     await itemPage.clickLogOut();
-    await browser.pause(500);
+    browser.pause(500);
 
     //Login + open cart
-    await browser.pause(500);
-    await LoginPage.login("standard_user", "secret_sauce");
+    browser.pause(500);
+    await loginPage.login("standard_user", "secret_sauce");
     await cartPage.clickCartBut();
-    await browser.pause(500);
+    browser.pause(500);
     //Add items from cart to array after logout>login
     const after = await cartPage.cartContents[0];
     const afterLogout = await after
@@ -48,9 +48,9 @@ xdescribe("Sorting", () => {
     console.log(afterLogout);
     //checking whether the items are the same
     let areEqual = true;
-    await expect(OpenCatr).toEqual(afterLogout);
+    expect(openCatr).toEqual(afterLogout);
     const newUrl = await browser.getUrl();
-    await expect(newUrl).toContain("https://www.saucedemo.com/cart.html");
-    (await expect(areEqual).toContain) === true;
+    expect(newUrl).toContain("https://www.saucedemo.com/cart.html");
+    expect(areEqual).toContain === true;
   });
 });

@@ -1,5 +1,4 @@
-import LoginPage from "../pageobjects/login.page.js";
-import ItemPage from "../pageobjects/item.page.js";
+import loginPage from "../pageobjects/login.page.js";
 import itemPage from "../pageobjects/item.page.js";
 
 xdescribe("Sorting items", () => {
@@ -7,8 +6,8 @@ xdescribe("Sorting items", () => {
   let sortedByName;
 
   beforeEach(async () => {
-    await LoginPage.open();
-    await LoginPage.login("standard_user", "secret_sauce");
+    await loginPage.open();
+    await loginPage.login("standard_user", "secret_sauce");
 
     const containerItems = await $$("#inventory_container")[0];
     prices = await containerItems
@@ -23,7 +22,7 @@ xdescribe("Sorting items", () => {
 
   it("Sort by low to hight", async () => {
     const sortedPrice = prices.sort((a, b) => a - b);
-    await ItemPage.dropdownBut();
+    await itemPage.dropdownBut();
     await itemPage.clickLoHi();
     const foof = await $$("#inventory_container")[0];
     const afterPrice = await foof
@@ -34,7 +33,7 @@ xdescribe("Sorting items", () => {
 
   it("Sort by hight to low", async () => {
     const sortedPrice = prices.sort((a, b) => b - a);
-    await ItemPage.dropdownBut();
+    await itemPage.dropdownBut();
     await itemPage.clickHiLo();
     const foof = await $$("#inventory_container")[0];
     const afterPrice = await foof
@@ -45,7 +44,7 @@ xdescribe("Sorting items", () => {
 
   it("Sort by Name(A to Z)", async () => {
     const sortedName = sortedByName.sort((a, b) => a - b);
-    await ItemPage.dropdownBut();
+    await itemPage.dropdownBut();
     await itemPage.clickAz();
     const too = await $$("#inventory_container")[0];
     const afterChangeByName = await too
@@ -56,7 +55,7 @@ xdescribe("Sorting items", () => {
 
   it("Sort by Name(Z to A)", async () => {
     const sortedName = sortedByName.reverse();
-    await ItemPage.dropdownBut();
+    await itemPage.dropdownBut();
     await itemPage.clickZa();
     const too = await $$("#inventory_container")[0];
     const afterChangeByName = await too
