@@ -19,13 +19,13 @@ describe("Sorting", () => {
     cartBadge.getText();
     expect(cartBadge).toHaveText("1");
     //open cart check url
-    console.log(cartPage.cart, cartPage.cartContents);
     cartPage.clickCartBut();
-    await browser.pause(100);
+    await browser.pause(300);
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain(URL + "cart.html");
     // add item from cart to array#1
+    await browser.pause(100);
     const too = await cartPage.cartContents[0];
     const openCatr = await too
       .$$(".inventory_item_name")
@@ -47,10 +47,8 @@ describe("Sorting", () => {
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
     //checking whether the items are the same
-    let areEqual = true;
     expect(openCatr).toEqual(afterLogout);
     const newUrl = await browser.getUrl();
     expect(newUrl).toContain(URL + "cart.html");
-    expect(areEqual).toContain === true;
   });
 });

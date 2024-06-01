@@ -14,7 +14,7 @@ describe("Sorting", () => {
 
   it("e2e test", async () => {
     //find some element and add it to cart
-    const infoItem = await $$(".inventory_item")[0];
+    const infoItem = $$(".inventory_item")[0];
     const beforeAdd = await infoItem
       .$$(".inventory_item_description")
       .map(async (name) =>
