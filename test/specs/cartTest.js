@@ -2,55 +2,55 @@ import { expect } from "@wdio/globals";
 import loginPage from "../pageobjects/login.page.js";
 import cartPage from "../pageobjects/cart.page.js";
 import itemPage from "../pageobjects/item.page.js";
-xdescribe("Sorting", () => {
+
+const USER_NAME = process.env.USER_NAME;
+const USER_PASSWORD = process.env.PASSWORD;
+const URL = process.env.URL;
+describe("Sorting", () => {
   beforeEach(async () => {
-    await loginPage.open();
-    await loginPage.login("standard_user", "secret_sauce");
+    loginPage.open();
+    await loginPage.login(USER_NAME, USER_PASSWORD);
   });
 
   it("Cart test", async () => {
     //find some element and add it to cart
-    await cartPage.clickAddBut();
+    cartPage.clickAddBut();
     const cartBadge = await cartPage.catrBadge;
-    await cartBadge.getText();
-    console.log("This is value from =" + cartBadge);
-    await expect(cartBadge).toHaveText("1");
+    cartBadge.getText();
+    expect(cartBadge).toHaveText("1");
     //open cart check url
     console.log(cartPage.cart, cartPage.cartContents);
-    await cartPage.clickCartBut();
-    browser.pause(500);
+    cartPage.clickCartBut();
+    await browser.pause(100);
 
     const currentUrl = await browser.getUrl();
-    await expect(currentUrl).toContain("https://www.saucedemo.com/cart.html");
-    // add item fкom cart to array#1
+    expect(currentUrl).toContain(URL + "cart.html");
+    // add item from cart to array#1
     const too = await cartPage.cartContents[0];
     const openCatr = await too
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
-    console.log(openCatr);
     //Logout
-    await itemPage.clickBurButt();
-    await browser.pause(500);
+    itemPage.clickBurButt();
+    await browser.pause(100);
 
-    await itemPage.clickLogOut();
-    browser.pause(500);
+    itemPage.clickLogOut();
+    await browser.pause(100);
 
     //Login + open cart
-    browser.pause(500);
-    await loginPage.login("standard_user", "secret_sauce");
-    await cartPage.clickCartBut();
-    browser.pause(500);
+    await loginPage.login(USER_NAME, USER_PASSWORD);
+    cartPage.clickCartBut();
+    await browser.pause(100);
     //Add items from cart to array after logout>login
     const after = await cartPage.cartContents[0];
     const afterLogout = await after
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
-    console.log(afterLogout);
     //checking whether the items are the same
     let areEqual = true;
     expect(openCatr).toEqual(afterLogout);
     const newUrl = await browser.getUrl();
-    expect(newUrl).toContain("https://www.saucedemo.com/cart.html");
+    expect(newUrl).toContain(URL + "cart.html");
     expect(areEqual).toContain === true;
   });
 });

@@ -2,14 +2,16 @@ import { expect } from "@wdio/globals";
 import loginPage from "../pageobjects/login.page.js";
 import itemPage from "../pageobjects/item.page.js";
 
-xdescribe("Login application", () => {
+const USER_NAME = process.env.USER_NAME;
+const USER_PASSWORD = process.env.PASSWORD;
+const URL = process.env.URL;
+describe("Login application", () => {
   it("should login with valid credentials", async () => {
     loginPage.open();
+    await loginPage.login(USER_NAME, USER_PASSWORD);
 
-    await loginPage.login("standard_user", "secret_sauce");
-    browser.pause(500);
     const currentUrl = await browser.getUrl();
-    expect(currentUrl).toContain("https://www.saucedemo.com/inventory.html");
+    expect(currentUrl).toContain(URL + "inventory.html");
 
     const infoItem = $$(".inventory_item")[0];
     expect(infoItem).toHaveElementClass("inventory_item");
@@ -17,9 +19,8 @@ xdescribe("Login application", () => {
 
   it("shouldn't login with invalid password credentials", async () => {
     loginPage.open();
-    await loginPage.login("standard_user", "secret_sauce" + 1);
+    await loginPage.login(USER_NAME, USER_PASSWORD + 1);
     const errorMassage = $$(".error-message-container")[0];
-    console.log(await errorMassage.getText());
     expect(await errorMassage.getText()).toEqual(
       "Epic sadface: Username and password do not match any user in this service"
     );
@@ -27,9 +28,8 @@ xdescribe("Login application", () => {
 
   it("shouldn't login with invalid login credentials", async () => {
     loginPage.open();
-    await loginPage.login("standard_user" + 1, "secret_sauce");
+    await loginPage.login(USER_NAME + 1, USER_PASSWORD);
     const errorMassage = $$(".error-message-container")[0];
-    console.log(await errorMassage.getText());
     expect(await errorMassage.getText()).toEqual(
       "Epic sadface: Username and password do not match any user in this service"
     );
@@ -37,20 +37,17 @@ xdescribe("Login application", () => {
 
   it("Login and logout", async () => {
     loginPage.open();
-    await loginPage.login("standard_user", "secret_sauce");
+    await loginPage.login(USER_NAME, USER_PASSWORD);
     itemPage.clickBurButt();
-    browser.pause(500);
     itemPage.clickLogOut();
 
     const getUserVal = await loginPage.getUserValue();
     const getPassVal = await loginPage.getPassValue();
     const currentUrl = await browser.getUrl();
 
-    console.log("Login val = " + getUserVal);
-    console.log("Pass val = " + getPassVal);
     expect(getUserVal).toBe();
     expect(getPassVal).toBe();
 
-    expect(currentUrl).toContain("https://www.saucedemo.com/");
+    expect(currentUrl).toContain(URL);
   });
 });
