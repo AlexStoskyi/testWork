@@ -1,7 +1,7 @@
 import { expect } from "@wdio/globals";
 import loginPage from "../pageobjects/login.page.js";
 import itemPage from "../pageobjects/item.page.js";
-import cartPage from "../pageobjects/cart.page.js";
+import shoppingCartPage from "../pageobjects/cart.page.js";
 
 const USER_NAME = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
@@ -12,18 +12,17 @@ describe("Sorting", () => {
     await loginPage.login(USER_NAME, USER_PASSWORD);
   });
 
-  it("e2e test", async () => {
+  it.only("e2e test", async () => {
     //find some element and add it to cart
-    const infoItem = $$(".inventory_item")[0];
-    const beforeAdd = await infoItem
+    const itemInformation = $$(".inventory_item")[0];
+    const descriptionItem = await itemInformation
       .$$(".inventory_item_description")
       .map(async (name) =>
         (await name.getText()).replace("Add to cart", "").trim()
       );
-    const cashVal = await infoItem
+    const itemPrice = await itemInformation
       .$$(".inventory_item_price")
       .map(async (cash) => (await cash.getText()).replace("$", "").trim());
-    console.log(cashVal);
     itemPage.clickAddProduct();
 
     const cartBadge = $(".shopping_cart_badge");
@@ -31,66 +30,68 @@ describe("Sorting", () => {
     expect(cartBadge).toHaveText("1");
     await browser.pause(100);
     //open cart check url
-    cartPage.clickCartBut();
+    shoppingCartPage.clickCartButton();
     await browser.pause(100);
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain(URL + "cart.html");
     // add item from cart to array
-    const too = $$("#cart_contents_container")[0];
-    const openCatr = await too
+    const cartContents = $$("#cart_contents_container")[0];
+    const cartItemInformation = await cartContents
       .$$(".cart_item_label")
       .map(async (name) => (await name.getText()).replace("Remove", "").trim());
-    expect(openCatr).toEqual(beforeAdd);
+    expect(cartItemInformation).toEqual(descriptionItem);
 
-    cartPage.clickCheckOut();
+    shoppingCartPage.clickCheckOut();
 
-    await cartPage.personInfo("Sasha", "Sto", "1234");
+    await shoppingCartPage.personInfo("Sasha", "Sto", "1234");
     await browser.pause(100);
-    const secUr = await browser.getUrl();
-    expect(secUr).toContain(URL + "checkout-step-two.html");
-    const overPage = $$(".cart_list")[0];
-    const overCheck = await overPage
+    const verificationUrl = await browser.getUrl();
+    expect(verificationUrl).toContain(URL + "checkout-step-two.html");
+    const overviewPage = $$(".cart_list")[0];
+    const overviewCheckItem = await overviewPage
       .$$(".cart_item_label")
       .map(async (name) => (await name.getText()).trim());
-    expect(overCheck).toEqual(beforeAdd);
+    expect(overviewCheckItem).toEqual(descriptionItem);
 
-    const sumInfo = $$(".summary_info")[0];
-    const taxVal = await sumInfo
+    const summeryInformation = $$(".summary_info")[0];
+    const taxValue = await summeryInformation
       .$$(".summary_tax_label")
       .map(async (tax) => (await tax.getText()).replace("Tax: $", "").trim());
-    const total = await sumInfo
+    const totalValue = await summeryInformation
       .$$(".summary_total_label")
-      .map(async (tot) => (await tot.getText()).replace("Total: $", "").trim());
+      .map(async (total) =>
+        (await total.getText()).replace("Total: $", "").trim()
+      );
 
-    expect(Number(total)).toEqual(Number(taxVal) + Number(cashVal));
+    expect(Number(totalValue)).toEqual(Number(taxValue) + Number(itemPrice));
     await browser.pause(100);
-    cartPage.clickFinish();
+    shoppingCartPage.clickFinish();
     await browser.pause(100);
     const finishUrl = await browser.getUrl();
     expect(finishUrl).toContain(URL + "checkout-complete.html");
     const finishText = (await (await $(".complete-header")).getText()).trim();
     expect(finishText).toEqual("Thank you for your order!");
 
-    cartPage.clickBackHomeBut();
+    shoppingCartPage.clickBackHomeButton();
     await browser.pause(100);
     const pageUrl = await browser.getUrl();
     expect(pageUrl).toContain(URL + "inventory.html");
 
-    expect(infoItem).toHaveElementClass("inventory_item");
+    expect(itemInformation).toHaveElementClass("inventory_item");
   });
   it("Empty e2e test", async () => {
     //open cart check url
     await browser.pause(100);
-    cartPage.clickCartBut();
+    shoppingCartPage.clickCartButton();
     await browser.pause(100);
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain(URL + "cart.html");
 
-    cartPage.clickCheckOut();
+    shoppingCartPage.clickCheckOut();
     await browser.pause(100);
 
-    const afterClickBtn = await browser.getUrl();
-    expect(afterClickBtn).toContain(currentUrl);
+    const afterClickButton = await browser.getUrl();
+    expect(afterClickButton).toContain(currentUrl);
   });
 });

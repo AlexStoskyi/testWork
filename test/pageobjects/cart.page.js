@@ -1,6 +1,6 @@
 import { $ } from "@wdio/globals";
 
-class cartPage {
+class shoppingCartPage {
   get productList() {
     return $(".inventory_item");
   }
@@ -10,7 +10,7 @@ class cartPage {
   get catrBadge() {
     return $(".shopping_cart_badge");
   }
-  get cart() {
+  get ShoppingCart() {
     return $("#shopping_cart_container");
   }
   get cartContents() {
@@ -31,18 +31,18 @@ class cartPage {
   get continueBut() {
     return $("#continue");
   }
-  get finishButt() {
+  get finishButton() {
     return $("#finish");
   }
-  get backHome() {
+  get backHomeButton() {
     return $("#back-to-products");
   }
 
-  async clickBackHomeBut() {
-    (await this.backHome).click();
+  async clickBackHomeButton() {
+    (await this.backHomeButton).click();
   }
   async clickFinish() {
-    (await this.finishButt).click();
+    (await this.finishButton).click();
   }
 
   async personInfo(username, password, zip) {
@@ -56,10 +56,10 @@ class cartPage {
     (await this.checkoutButton).click();
   }
 
-  async clickCartBut() {
-    (await this.cart).click();
+  async clickCartButton() {
+    (await this.ShoppingCart).click();
   }
-  async clickAddBut() {
+  async clickAddButton() {
     (await this.addButton).click();
   }
   async getTextBadge() {
@@ -67,4 +67,4 @@ class cartPage {
   }
 }
 
-export default new cartPage();
+export default new shoppingCartPage();

@@ -20,8 +20,8 @@ describe("Check clickable of Link", () => {
     itemPage.clickTwitter();
     await browser.pause(200);
     await browser.switchWindow(X_LINK);
-    const curUrl = await browser.getUrl();
-    expect(curUrl).toBe(X_LINK);
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toBe(X_LINK);
   });
 
   it("Check clickable of Footer Links(Facebook)", async () => {
@@ -29,8 +29,8 @@ describe("Check clickable of Link", () => {
     itemPage.clickFacebook();
     await browser.pause(200);
     await browser.switchWindow(FACE_LINK);
-    const curUrl = await browser.getUrl();
-    expect(curUrl).toBe(FACE_LINK);
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toBe(FACE_LINK);
   });
 
   it("Check clickable of Footer Links(Linkedin)", async () => {
@@ -38,7 +38,7 @@ describe("Check clickable of Link", () => {
     itemPage.clickLinkedin();
     await browser.pause(200);
     await browser.switchWindow(LINKEDIN_LINK);
-    const curUrl = await browser.getUrl();
-    expect(curUrl).toBe(LINKEDIN_LINK);
+    const currentUrl = await browser.getUrl();
+    expect(currentUrl).toBe(LINKEDIN_LINK);
   });
 });

@@ -4,64 +4,64 @@ import itemPage from "../pageobjects/item.page.js";
 const USER_LOGIN = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
 describe("Sorting items", () => {
-  let prices;
+  let sortedByPrice;
   let sortedByName;
   beforeEach(async () => {
     loginPage.open();
     await loginPage.login(USER_LOGIN, USER_PASSWORD);
 
     const containerItems = await $$("#inventory_container")[0];
-    prices = await containerItems
+    sortedByPrice = await containerItems
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
 
-    const too = $$("#inventory_container")[0];
-    sortedByName = await too
+    // const getItemListInformation = $$("#inventory_container")[0];
+    sortedByName = await containerItems
       .$$(".inventory_item_name")
       .map(async (name) => await name.getText());
   });
 
   it("Sort by low to hight", async () => {
-    const sortedPrice = prices.sort((a, b) => a - b);
-    itemPage.dropdownBut();
+    const sortedPriceContainer = sortedByPrice.sort((a, b) => a - b);
+    itemPage.dropdownButton();
     itemPage.clickLoHi();
-    const foof = $$("#inventory_container")[0];
-    const afterPrice = await foof
+    const getItemListInformation = $$("#inventory_container")[0];
+    const afterSortByPrice = await getItemListInformation
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
-    expect(afterPrice).toEqual(sortedPrice);
+    expect(afterSortByPrice).toEqual(sortedPriceContainer);
   });
 
   it("Sort by hight to low", async () => {
-    const sortedPrice = prices.sort((a, b) => b - a);
-    itemPage.dropdownBut();
+    const sortedPriceContainer = sortedByPrice.sort((a, b) => b - a);
+    itemPage.dropdownButton();
     itemPage.clickHiLo();
-    const foof = $$("#inventory_container")[0];
-    const afterPrice = await foof
+    const getItemListInformation = $$("#inventory_container")[0];
+    const afterSortByPrice = await getItemListInformation
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
-    await expect(afterPrice).toEqual(sortedPrice);
+    await expect(afterSortByPrice).toEqual(sortedPriceContainer);
   });
 
   it("Sort by Name(A to Z)", async () => {
-    const sortedName = sortedByName.sort((a, b) => a - b);
-    itemPage.dropdownBut();
+    const sortedNameContainer = sortedByName.sort((a, b) => a - b);
+    itemPage.dropdownButton();
     itemPage.clickAz();
-    const too = $$("#inventory_container")[0];
-    const afterChangeByName = await too
+    const getItemListInformation = $$("#inventory_container")[0];
+    const afterSortByName = await getItemListInformation
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
-    expect(afterChangeByName).toEqual(sortedName);
+    expect(afterSortByName).toEqual(sortedNameContainer);
   });
 
   it("Sort by Name(Z to A)", async () => {
-    const sortedName = sortedByName.reverse();
-    itemPage.dropdownBut();
+    const sortedNameContainer = sortedByName.reverse();
+    itemPage.dropdownButton();
     itemPage.clickZa();
-    const too = $$("#inventory_container")[0];
-    const afterChangeByName = await too
+    const getItemListInformation = $$("#inventory_container")[0];
+    const afterSortByName = await getItemListInformation
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
-    expect(afterChangeByName).toEqual(sortedName);
+    expect(afterSortByName).toEqual(sortedNameContainer);
   });
 });

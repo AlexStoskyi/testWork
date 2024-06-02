@@ -25,31 +25,30 @@ class itemsPage {
   get footer() {
     return $(".footer");
   }
-  get twitterBut() {
+  get twitterButton() {
     return $('[href="https://twitter.com/saucelabs"]');
   }
-  get facebookBut() {
+  get facebookButton() {
     return $('[href="https://www.facebook.com/saucelabs"]');
   }
-  get linkedinBut() {
+  get linkedinButton() {
     return $('[href="https://www.linkedin.com/company/sauce-labs/"]');
   }
-  get addProductBut() {
+  get addProductButton() {
     return $("#add-to-cart-sauce-labs-backpack");
   }
 
-
   async clickAddProduct() {
-    (await this.addProductBut).click();
+    (await this.addProductButton).click();
   }
   async clickTwitter() {
-    (await this.twitterBut).click();
+    (await this.twitterButton).click();
   }
   async clickFacebook() {
-    (await this.facebookBut).click();
+    (await this.facebookButton).click();
   }
   async clickLinkedin() {
-    (await this.linkedinBut).click();
+    (await this.linkedinButton).click();
   }
   async scrollToFooter() {
     await this.footer.scrollIntoView();
@@ -57,10 +56,10 @@ class itemsPage {
   async clickLogOut() {
     await this.logoutButton.click();
   }
-  async clickBurButt() {
+  async clickBurgerButton() {
     await this.burgerButton.click();
   }
-  async clickLogOutButt() {
+  async clickLogOutButton() {
     await this.logoutButton.click();
   }
   async clickHiLo() {
@@ -76,17 +75,16 @@ class itemsPage {
     await this.dropdownAz.click();
   }
 
-  async dropdownBut() {
+  async dropdownButton() {
     await this.dropdown.click();
   }
-  async;
-
-  open() {
-    return super.open("dropdownBut");
-  }
-  openDrop() {
-    return super.open("clickBurButt");
-  }
+  
+//   open() {
+//     return super.open("dropdownButton");
+//   }
+//   openDrop() {
+//     return super.open("clickBurgerButton");
+//   }
 }
 
 export default new itemsPage();
