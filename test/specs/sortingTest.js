@@ -4,8 +4,8 @@ import itemPage from "../pageobjects/item.page.js";
 const USER_LOGIN = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
 describe("Sorting items", () => {
-  let sortedByPrice;
-  let sortedByName;
+  let itemsPrice;
+  let itemsName;
   beforeEach(async () => {
     loginPage.open();
     await loginPage.login(USER_LOGIN, USER_PASSWORD);

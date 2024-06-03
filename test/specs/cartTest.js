@@ -6,9 +6,11 @@ import itemPage from "../pageobjects/item.page.js";
 const USER_NAME = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
 const URL = process.env.URL;
+
 describe("Sorting", () => {
   beforeEach(async () => {
     loginPage.open();
+    await browser.pause(200);
     await loginPage.login(USER_NAME, USER_PASSWORD);
   });
 

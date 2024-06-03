@@ -12,7 +12,7 @@ describe("Sorting", () => {
     await loginPage.login(USER_NAME, USER_PASSWORD);
   });
 
-  it.only("e2e test", async () => {
+  it("e2e test", async () => {
     //find some element and add it to cart
     const itemInformation = $$(".inventory_item")[0];
     const descriptionItem = await itemInformation
