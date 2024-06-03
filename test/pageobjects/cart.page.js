@@ -7,7 +7,7 @@ class shoppingCartPage {
   get addButton() {
     return $("#add-to-cart-sauce-labs-backpack");
   }
-  get catrBadge() {
+  get cartBadge() {
     return $(".shopping_cart_badge");
   }
   get ShoppingCart() {

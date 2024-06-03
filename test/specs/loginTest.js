@@ -2,6 +2,8 @@ import { expect } from "@wdio/globals";
 import loginPage from "../pageobjects/login.page.js";
 import itemPage from "../pageobjects/item.page.js";
 
+const errorMessage =
+  "Epic sadface: Username and password do not match any user in this service";
 const USER_NAME = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
 const URL = process.env.URL;
@@ -21,18 +23,14 @@ describe("Login application", () => {
     loginPage.open();
     await loginPage.login(USER_NAME, USER_PASSWORD + 1);
     const errorMassageContainer = $$(".error-message-container")[0];
-    expect(await errorMassageContainer.getText()).toEqual(
-      "Epic sadface: Username and password do not match any user in this service"
-    );
+    expect(await errorMassageContainer.getText()).toEqual(errorMessage);
   });
 
   it("shouldn't login with invalid login credentials", async () => {
     loginPage.open();
     await loginPage.login(USER_NAME + 1, USER_PASSWORD);
     const errorMassageContainer = $$(".error-message-container")[0];
-    expect(await errorMassageContainer.getText()).toEqual(
-      "Epic sadface: Username and password do not match any user in this service"
-    );
+    expect(await errorMassageContainer.getText()).toEqual(errorMessage);
   });
 
   it("Login and logout", async () => {

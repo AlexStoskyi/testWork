@@ -15,19 +15,18 @@ describe("Sorting", () => {
   it("Cart test", async () => {
     //find some element and add it to cart
     shoppingCartPage.clickAddButton();
-    const cartBadge = await shoppingCartPage.catrBadge;
-    cartBadge.getText();
+    const cartBadge = await shoppingCartPage.cartBadge.getText();
     expect(cartBadge).toHaveText("1");
     //open cart check url
     shoppingCartPage.clickCartButton();
-    await browser.pause(300);
+    await browser.pause(1000);
 
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain(URL + "cart.html");
     // add item from cart to array#1
     await browser.pause(100);
-    const too = await shoppingCartPage.cartContents[0];
-    const openCatr = await too
+    const informationProductCart = await shoppingCartPage.cartContents[0];
+    const cartItemName = await informationProductCart
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
     //Logout
@@ -42,12 +41,12 @@ describe("Sorting", () => {
     shoppingCartPage.clickCartButton();
     await browser.pause(100);
     //Add items from cart to array after logout>login
-    const after = await shoppingCartPage.cartContents[0];
-    const afterLogout = await after
+    const cartInformationAfterLogout = await shoppingCartPage.cartContents[0];
+    const cartItemNameAfterLogout = await cartInformationAfterLogout
       .$$(".inventory_item_name")
       .map(async (name) => (await name.getText()).replace("$", ""));
     //checking whether the items are the same
-    expect(openCatr).toEqual(afterLogout);
+    expect(cartItemName).toEqual(cartItemNameAfterLogout);
     const newUrl = await browser.getUrl();
     expect(newUrl).toContain(URL + "cart.html");
   });

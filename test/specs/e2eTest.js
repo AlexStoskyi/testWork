@@ -18,7 +18,7 @@ describe("Sorting", () => {
     const descriptionItem = await itemInformation
       .$$(".inventory_item_description")
       .map(async (name) =>
-        (await name.getText()).replace("Add to cart", "").trim()
+        (await name.getText()).replace("Add to cart", "").trim(),
       );
     const itemPrice = await itemInformation
       .$$(".inventory_item_price")
@@ -60,7 +60,7 @@ describe("Sorting", () => {
     const totalValue = await summeryInformation
       .$$(".summary_total_label")
       .map(async (total) =>
-        (await total.getText()).replace("Total: $", "").trim()
+        (await total.getText()).replace("Total: $", "").trim(),
       );
 
     expect(Number(totalValue)).toEqual(Number(taxValue) + Number(itemPrice));

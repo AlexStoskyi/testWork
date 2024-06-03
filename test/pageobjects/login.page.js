@@ -20,7 +20,6 @@ class loginPage extends Page {
     return $("#login-button");
   }
 
-
   async getUserValue() {
     (await this.inputUsername).getValue();
   }

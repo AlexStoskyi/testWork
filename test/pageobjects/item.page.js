@@ -78,13 +78,13 @@ class itemsPage {
   async dropdownButton() {
     await this.dropdown.click();
   }
-  
-//   open() {
-//     return super.open("dropdownButton");
-//   }
-//   openDrop() {
-//     return super.open("clickBurgerButton");
-//   }
+
+  //   open() {
+  //     return super.open("dropdownButton");
+  //   }
+  //   openDrop() {
+  //     return super.open("clickBurgerButton");
+  //   }
 }
 
 export default new itemsPage();

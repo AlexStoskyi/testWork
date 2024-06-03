@@ -21,11 +21,11 @@ export const config = {
   // of the config file unless it's absolute.
   //
   specs: [
-    // "./test/specs/loginTest.js",
-    // "./test/specs/sortingTest.js",
-    //   "./test/specs/cartTest.js",
+    "./test/specs/loginTest.js",
+    "./test/specs/sortingTest.js",
+    "./test/specs/cartTest.js",
     "./test/specs/e2eTest.js",
-    //   "./test/specs/footerLinksTest.js",
+    "./test/specs/footerLinksTest.js",
   ],
   // Patterns to exclude.
   exclude: [

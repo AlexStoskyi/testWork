@@ -15,7 +15,7 @@ describe("Check clickable of Link", () => {
     await loginPage.login(USER_LOGIN, USER_PASSWORD);
   });
 
-  it("Check clickable of Footer Links(Twiter)", async () => {
+  it("Check clickable of Footer Links(Twitter)", async () => {
     itemPage.scrollToFooter();
     itemPage.clickTwitter();
     await browser.pause(200);
