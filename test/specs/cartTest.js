@@ -7,14 +7,14 @@ const USER_NAME = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
 const URL = process.env.URL;
 
-describe("Sorting", () => {
+describe("Shopping cart testing", () => {
   beforeEach(async () => {
     loginPage.open();
     await browser.pause(200);
     await loginPage.login(USER_NAME, USER_PASSWORD);
   });
 
-  it("Cart test", async () => {
+  it("should add product to cart and check him after Logout/Login", async () => {
     //find some element and add it to cart
     shoppingCartPage.clickAddButton();
     const cartBadge = await shoppingCartPage.cartBadge.getText();

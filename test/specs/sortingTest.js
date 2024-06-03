@@ -15,7 +15,6 @@ describe("Sorting items", () => {
       .$$(".inventory_item_price")
       .map(async (price) => (await price.getText()).replace("$", ""));
 
-    // const getItemListInformation = $$("#inventory_container")[0];
     itemsName = await containerItems
       .$$(".inventory_item_name")
       .map(async (name) => await name.getText());

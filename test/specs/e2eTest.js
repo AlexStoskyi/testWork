@@ -6,7 +6,7 @@ import shoppingCartPage from "../pageobjects/cart.page.js";
 const USER_NAME = process.env.USER_NAME;
 const USER_PASSWORD = process.env.PASSWORD;
 const URL = process.env.URL;
-describe("Sorting", () => {
+describe("Conducting full testing ", () => {
   beforeEach(async () => {
     loginPage.open();
     await loginPage.login(USER_NAME, USER_PASSWORD);
@@ -79,7 +79,7 @@ describe("Sorting", () => {
 
     expect(itemInformation).toHaveElementClass("inventory_item");
   });
-  it("Empty e2e test", async () => {
+  it("Empty cart e2e test", async () => {
     //open cart check url
     await browser.pause(100);
     shoppingCartPage.clickCartButton();
